@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using MiniOrchard.Logging;
 using MiniOrchard.Mvc;
 using MiniOrchard.Mvc.Filters;
-using IFilterProvider = MiniOrchard.Mvc.Filters.IFilterProvider;
+//using IFilterProvider = MiniOrchard.Mvc.Filters.IFilterProvider;
 
 namespace Orchard.Exceptions.Filters
 {

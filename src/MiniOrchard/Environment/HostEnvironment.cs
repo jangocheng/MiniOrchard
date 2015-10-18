@@ -5,7 +5,7 @@
 	using System.Reflection;
 	using System.Web.Hosting;
 
-	public class HostEnvironment : IHostEnvironment
+	public abstract class HostEnvironment : IHostEnvironment
 	{
 		public bool IsFullTrust
 		{

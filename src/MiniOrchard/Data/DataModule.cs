@@ -9,9 +9,12 @@ namespace MiniOrchard.Data
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
+			builder.RegisterType<SessionLocator>().As<ISessionLocator>();
+			builder.RegisterType<SessionFactoryHolder>().As<ISessionFactoryHolder>();
+			builder.RegisterType<TransactionManager>().As<ITransactionManager>();
 			builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerDependency();
-
 		}
+
 		protected override void AttachToComponentRegistration(Autofac.Core.IComponentRegistry componentRegistry, Autofac.Core.IComponentRegistration registration)
 		{
 			if (typeof(IDataServicesProvider).IsAssignableFrom(registration.Activator.LimitType))

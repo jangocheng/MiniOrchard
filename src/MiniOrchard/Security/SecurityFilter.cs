@@ -5,8 +5,7 @@ using MiniOrchard.Mvc.Filters;
 
 namespace MiniOrchard.Security
 {
-	//[UsedImplicitly]
-	public class SecurityFilter : FilterProvider, IExceptionFilter, IAuthorizationFilter
+	public class SecurityFilter : IGlobalFilter, IExceptionFilter, IAuthorizationFilter
 	{
 		private readonly IAuthorizer _authorizer;
 
@@ -20,19 +19,21 @@ namespace MiniOrchard.Security
 
 		public void OnAuthorization(AuthorizationContext filterContext)
 		{
-
 			var accessFrontEnd = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AlwaysAccessibleAttribute), true).Any();
-
-			//if (!AdminFilter.IsApplied(filterContext.RequestContext) && !accessFrontEnd && !_authorizer.Authorize(StandardPermissions.AccessFrontEnd))
-			//{
-			//    filterContext.Result = new HttpUnauthorizedResult();
-			//}
+			if (!accessFrontEnd && filterContext.ActionDescriptor.ControllerDescriptor.ControllerType.GetCustomAttributes(typeof(AlwaysAccessibleAttribute), true).Any())
+			{
+				accessFrontEnd = true;
+			}
+			if (!accessFrontEnd && !_authorizer.Authorize(StandardPermissions.AccessFrontEnd))
+			{
+				filterContext.Result = new HttpUnauthorizedResult();
+			}
 		}
 
 		public void OnException(ExceptionContext filterContext)
 		{
-			//if (!(filterContext.Exception is MiniOrchardSecurityException))
-			//    return;
+			if (!(filterContext.Exception is FrameworkSecurityException))
+				return;
 
 			try
 			{

@@ -25,7 +25,7 @@
 			moduleBuilder.RegisterType<DefaultLog4netFactory>().As<Castle.Core.Logging.ILoggerFactory>().InstancePerLifetimeScope();
 
 			// call CreateLogger in response to the request for an ILogger implementation
-			moduleBuilder.Register(CreateLogger).As<ILogger>().InstancePerDependency();
+			moduleBuilder.Register(CreateLogger).As<ILogger>().SingleInstance();
 		}
 
 		protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration)

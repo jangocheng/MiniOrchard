@@ -1,19 +1,21 @@
+using MiniOrchard.Content;
+using MiniOrchard.Events;
 using MiniOrchard.Security.Permissions;
 
 namespace MiniOrchard.Security
 {
-	//public interface IAuthorizationServiceEventHandler : IEventHandler
-	//{
-	//    void Checking(CheckAccessContext context);
-	//    void Adjust(CheckAccessContext context);
-	//    void Complete(CheckAccessContext context);
-	//}
+	public interface IAuthorizationServiceEventHandler : IEventHandler
+	{
+		void Checking(CheckAccessContext context);
+		void Adjust(CheckAccessContext context);
+		void Complete(CheckAccessContext context);
+	}
 
 	public class CheckAccessContext
 	{
 		public Permission Permission { get; set; }
 		public IUser User { get; set; }
-		//public IContent Content { get; set; }
+		public IContent Content { get; set; }
 
 		// true if the permission has been granted to the user.
 		public bool Granted { get; set; }
